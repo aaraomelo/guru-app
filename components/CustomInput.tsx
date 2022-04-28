@@ -29,8 +29,9 @@ const CustomInput = ({ id, type, label, value, onChange, placeholder, helperText
         onChange={onChange}
         placeholder={placeholder}
         errorBorderColor='red.500'
+        focusBorderColor={isError ? 'red.500' : 'primary.500'}
       />
-      {!isError ? (<FormHelperText>{helperText}</FormHelperText>) :
+      {!isError ? (<FormHelperText>{value.length === 0 && helperText}</FormHelperText>) :
         (<FormErrorMessage>{errorMessages && errorMessages[0]}</FormErrorMessage>)}
     </FormControl>
   )

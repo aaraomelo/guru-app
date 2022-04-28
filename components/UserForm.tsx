@@ -20,14 +20,15 @@ type Props = {
     email: (e: any) => void;
     password: (e: any) => void;
   },
-  errorMessages?:{
-    name?: Array<string>;
-    email?: Array<string>;
-    password?: Array<string>;
-  }
+  errorMessages: {
+    name: Array<string>;
+    email: Array<string>;
+    password: Array<string>;
+  },
+  submit: () => void
 }
 
-const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages }: Props) => {
+const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages, submit }: Props) => {
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
@@ -43,7 +44,7 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages }: P
               value={getters.name}
               onChange={setters.name}
               placeholder="Jhon Doe"
-              errorMessages={[]}
+              errorMessages={errorMessages.name}
               helperText="Digite um nome"
             />
             <CustomInput
@@ -53,7 +54,7 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages }: P
               value={getters.email}
               onChange={setters.email}
               placeholder="jhondoe@mail.com"
-              errorMessages={[]}
+              errorMessages={errorMessages.email}
               helperText="Digite um e-mail"
               mt={6}
             />
@@ -65,11 +66,16 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages }: P
               value={getters.password}
               onChange={setters.password}
               placeholder='******'
-              errorMessages={[]}
+              errorMessages={errorMessages.password}
               helperText="Digite uma senha"
               mt={6}
             />
-            <Button variant="outline" width="full" mt={4}>
+            <Button
+              onClick={submit}
+              variant="outline"
+              width="full"
+              mt={4}
+            >
               {buttonTitle}
             </Button>
           </form>
