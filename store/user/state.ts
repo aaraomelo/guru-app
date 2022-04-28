@@ -5,5 +5,12 @@ export const weatherInitialState: UserState = {
       email: '',
       password: '',
     }
+  },
+  validations: {
+    signup: {
+      name: [],
+      email: [],
+      password: [],
+    }
   }
 };
