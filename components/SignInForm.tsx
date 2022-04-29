@@ -6,23 +6,25 @@ import {
   Button,
 } from '@chakra-ui/react';
 import CustomInput from './CustomInput';
+import { setSignInFormField, validateSignInForm } from '../store/user/actionCreators';
+import { connect } from 'react-redux';
 
-type Props = {
-  formTitle: string;
-  buttonTitle: string;
-  getters: UserInterface,
-  setters: SetterUserInterface,
-  blur: BlurUserInterface,
-  errorMessages: ValidationUserInterface,
-  submit: () => void
-}
+export interface SignInProps { }
 
-const SignInForm = ({ formTitle, buttonTitle, getters, setters, blur, errorMessages, submit }: Props) => {
+type Props = SignInProps & MapStateToPropsTypes & MapDispatchToPropsTypes;
+
+const SignInForm = ({ getSignInForm, getErrorMessages, setSignInForm, validateSignInFormField }: Props) => {
+  const getters = getSignInForm();
+  const setters = setSignInForm();
+  const errorMessages = getErrorMessages();
+  const blur = validateSignInFormField();
+  const submit = () => console.log('login');
+  
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
         <Box textAlign="center">
-          <Heading>{formTitle}</Heading>
+          <Heading>Login</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form>
@@ -57,7 +59,7 @@ const SignInForm = ({ formTitle, buttonTitle, getters, setters, blur, errorMessa
               width="full"
               mt={4}
             >
-              {buttonTitle}
+              login
             </Button>
           </form>
         </Box>
@@ -66,4 +68,38 @@ const SignInForm = ({ formTitle, buttonTitle, getters, setters, blur, errorMessa
   );
 }
 
-export default SignInForm;
+interface MapStateToPropsTypes {
+  getSignInForm: () => SignInInterface;
+  getErrorMessages: () => ValidationSignInInterface;
+}
+
+interface MapDispatchToPropsTypes {
+  setSignInForm: () => SetterSignInInterface;
+  validateSignInFormField: () => BlurSignInInterface;
+}
+
+function mapStateToProps(state: any) {
+  return {
+    getSignInForm: () => state.user.forms.signin,
+    getErrorMessages: () => state.user.validations.signin,
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setSignInForm: () => ({
+      email: (e: any) => dispatch(setSignInFormField({ field: 'email', value: e.target.value })),
+      password: (e: any) => dispatch(setSignInFormField({ field: 'password', value: e.target.value })),
+    }),
+    validateSignInFormField: () => ({
+      email: () => dispatch(validateSignInForm({ field: 'email' })),
+      password: () => dispatch(validateSignInForm({ field: 'password' })),
+    }),
+  }
+}
+
+export default connect<MapStateToPropsTypes, MapDispatchToPropsTypes>(
+  mapStateToProps,
+  mapDispatchToProps)
+  (SignInForm);
+
