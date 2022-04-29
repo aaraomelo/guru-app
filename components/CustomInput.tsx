@@ -6,13 +6,14 @@ type Props = {
   label: string;
   value: any;
   onChange?: (e: any) => void;
+  onBlur?: (e: any) => void;
   placeholder?: string;
   helperText?: string;
   errorMessages?: Array<string>;
   mt?: number
 }
 
-const CustomInput = ({ id, type, label, value, onChange, placeholder, helperText, errorMessages, mt }: Props) => {
+const CustomInput = ({ id, type, label, value, onChange, onBlur, placeholder, helperText, errorMessages, mt }: Props) => {
   const isError = errorMessages?.length != 0;
   return (
     <FormControl mt={mt} isInvalid={isError}>
@@ -30,6 +31,7 @@ const CustomInput = ({ id, type, label, value, onChange, placeholder, helperText
         placeholder={placeholder}
         errorBorderColor='red.500'
         focusBorderColor={isError ? 'red.500' : 'primary.500'}
+        onBlur={onBlur}
       />
       {!isError ? (<FormHelperText>{value.length === 0 && helperText}</FormHelperText>) :
         (<FormErrorMessage>{errorMessages && errorMessages[0]}</FormErrorMessage>)}

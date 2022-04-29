@@ -20,6 +20,11 @@ type Props = {
     email: (e: any) => void;
     password: (e: any) => void;
   },
+  blur: {
+    name: () => void;
+    email: () => void;
+    password: () => void;
+  },
   errorMessages: {
     name: Array<string>;
     email: Array<string>;
@@ -28,7 +33,7 @@ type Props = {
   submit: () => void
 }
 
-const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages, submit }: Props) => {
+const UserForm = ({ formTitle, buttonTitle, getters, setters, blur, errorMessages, submit }: Props) => {
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
@@ -45,6 +50,7 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages, sub
               onChange={setters.name}
               placeholder="Jhon Doe"
               errorMessages={errorMessages.name}
+              onBlur={blur.name}
               helperText="Digite um nome"
             />
             <CustomInput
@@ -53,6 +59,7 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages, sub
               label='Email'
               value={getters.email}
               onChange={setters.email}
+              onBlur={blur.email}
               placeholder="jhondoe@mail.com"
               errorMessages={errorMessages.email}
               helperText="Digite um e-mail"
@@ -65,6 +72,7 @@ const UserForm = ({ formTitle, buttonTitle, getters, setters, errorMessages, sub
               label='Senha'
               value={getters.password}
               onChange={setters.password}
+              onBlur={blur.password}
               placeholder='******'
               errorMessages={errorMessages.password}
               helperText="Digite uma senha"

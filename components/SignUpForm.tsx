@@ -1,19 +1,20 @@
 import { connect } from "react-redux";
 import UserForm from "../components/UserForm";
-import { setSignUpFormField } from "../store/user/actionCreators";
+import { setSignUpFormField, validateSignUpForm } from "../store/user/actionCreators";
 
 export interface IdentificationProps { }
 
 type Props = IdentificationProps & MapStateToPropsTypes & MapDispatchToPropsTypes;
 
-const SignUpForm = ({ getSignUpForm, setSignUpForm, getErrorMessages}: Props) => {
+const SignUpForm = ({ getSignUpForm, setSignUpForm, getErrorMessages, validateSignUpFormField }: Props) => {
 
   return <>
     <UserForm
       formTitle='Cadastre-se'
-      buttonTitle ='Cadastar'
+      buttonTitle='Cadastar'
       getters={getSignUpForm()}
       setters={setSignUpForm()}
+      blur={validateSignUpFormField()}
       errorMessages={getErrorMessages()}
       submit={() => console.log('submit')}
     />
@@ -21,8 +22,8 @@ const SignUpForm = ({ getSignUpForm, setSignUpForm, getErrorMessages}: Props) =>
 }
 
 interface MapStateToPropsTypes {
-  getSignUpForm: () => UserInterface,
-  getErrorMessages: () => ValidationUserInterface,
+  getSignUpForm: () => UserInterface;
+  getErrorMessages: () => ValidationUserInterface;
 }
 
 interface MapDispatchToPropsTypes {
@@ -30,7 +31,12 @@ interface MapDispatchToPropsTypes {
     name: (e: any) => void,
     email: (e: any) => void,
     password: (e: any) => void
-  })
+  });
+  validateSignUpFormField: () => ({
+    name: () => void,
+    email: () => void,
+    password: () => void
+  });
 }
 
 function mapStateToProps(state: any) {
@@ -46,6 +52,11 @@ const mapDispatchToProps = (dispatch: any) => {
       name: (e: any) => dispatch(setSignUpFormField({ field: 'name', value: e.target.value })),
       email: (e: any) => dispatch(setSignUpFormField({ field: 'email', value: e.target.value })),
       password: (e: any) => dispatch(setSignUpFormField({ field: 'password', value: e.target.value }))
+    }),
+    validateSignUpFormField: () => ({
+      name: () => dispatch(validateSignUpForm({ field: 'name' })),
+      email: () => dispatch(validateSignUpForm({ field: 'email' })),
+      password: () => dispatch(validateSignUpForm({ field: 'password' }))
     }),
   }
 }
