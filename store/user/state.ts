@@ -1,4 +1,4 @@
-export const weatherInitialState: UserState = {
+export const userInitialState: UserState = {
   forms: {
     signup: {
       name: '',
