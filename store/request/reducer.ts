@@ -9,7 +9,8 @@ export default createReducer(RequestInitialState,
     builder
       .addCase(setToken, (state, action) => { 
         const { access_token } = action.payload;
-        state.access_token = access_token
+        state.access_token = access_token;
+        localStorage.setItem('gtoken', access_token || '');
       })
   }
 );
