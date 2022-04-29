@@ -1,5 +1,10 @@
 
 type RequestState = {
   baseURL: string,
-  token: string | null
+  access_token: string | null
+}
+
+
+interface TokenInterface{
+  access_token: string | null,
 }

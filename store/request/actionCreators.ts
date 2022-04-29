@@ -1,4 +1,8 @@
 import axios from "axios";
+import * as actionTypes from "./actionTypes"
+
+export const setToken = (payload: TokenInterface) =>
+  ({ type: actionTypes.SET_TOKEN, payload });
 
 export const POST = (url: string, data: any, dispatch: any, requestAction: any) =>
   new Promise<any>((resolve, reject) => {
