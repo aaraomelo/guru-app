@@ -27,16 +27,8 @@ interface MapStateToPropsTypes {
 }
 
 interface MapDispatchToPropsTypes {
-  setSignUpForm: () => ({
-    name: (e: any) => void,
-    email: (e: any) => void,
-    password: (e: any) => void
-  });
-  validateSignUpFormField: () => ({
-    name: () => void,
-    email: () => void,
-    password: () => void
-  });
+  setSignUpForm: () => SetterUserInterface;
+  validateSignUpFormField: () => BlurUserInterface;
 }
 
 function mapStateToProps(state: any) {

@@ -20,3 +20,17 @@ interface ValidationUserInterface {
   password: Array<string>,
   [key: string]: any
 }
+
+interface SetterUserInterface {
+  name: (e: any) => void;
+  email: (e: any) => void;
+  password: (e: any) => void;
+  [key: string]: any
+}
+
+interface BlurUserInterface {
+  name: () => void;
+  email: () => void;
+  password: () => void;
+  [key: string]: any
+}

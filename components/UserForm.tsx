@@ -10,26 +10,10 @@ import CustomInput from './CustomInput';
 type Props = {
   formTitle: string;
   buttonTitle: string;
-  getters: {
-    name: string;
-    email: string;
-    password: string;
-  },
-  setters: {
-    name: (e: any) => void;
-    email: (e: any) => void;
-    password: (e: any) => void;
-  },
-  blur: {
-    name: () => void;
-    email: () => void;
-    password: () => void;
-  },
-  errorMessages: {
-    name: Array<string>;
-    email: Array<string>;
-    password: Array<string>;
-  },
+  getters: UserInterface,
+  setters: SetterUserInterface,
+  blur: BlurUserInterface,
+  errorMessages: ValidationUserInterface,
   submit: () => void
 }
 
