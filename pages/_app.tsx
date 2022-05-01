@@ -4,13 +4,16 @@ import { ChakraProvider } from '@chakra-ui/react'
 import customTheme from "../utils/theme";
 import Layout from '../components/Layout';
 import { StoreProvider } from '../store';
+import RouteGuard from '../components/RouteGuard';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return <StoreProvider>
     <ChakraProvider theme={customTheme}>
       <Layout>
-        <Component {...pageProps} />
+        <RouteGuard>
+          <Component {...pageProps} />
+        </RouteGuard>
       </Layout>
     </ChakraProvider>
   </StoreProvider>

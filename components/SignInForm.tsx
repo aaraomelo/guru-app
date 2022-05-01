@@ -25,13 +25,6 @@ const SignInForm = ({ getSignInForm, getErrorMessages, setSignInForm, validateSi
   const submit = () => signin()
     .then(() => {
       router.push('/users');
-      toast({
-        title: `Login realizado`,
-        description: `Seja bem vindo!`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
     })
     .catch((error) => {
       const { statusCode, message } = error.response.data;

@@ -1,4 +1,11 @@
 export const userInitialState: UserState = {
+  auth: null,
+  currentUser: {
+    id: 0,
+    name: '',
+    email: '',
+    password: ''
+  },
   requests: {
     postSignIn: {
       pending: false,

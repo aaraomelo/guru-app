@@ -1,4 +1,6 @@
 type UserState = {
+  auth: boolean | null,
+  currentUser: UserInterface;
   requests: {
     postSignIn: RequestInterface
   },
@@ -67,3 +69,11 @@ interface BlurSignInInterface {
   password: () => void;
   [key: string]: any
 }
+
+interface UserInterface {
+  id?: number,
+  name: string,
+  email: string,
+  password: string,
+}
+

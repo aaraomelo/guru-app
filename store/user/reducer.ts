@@ -9,6 +9,8 @@ const validateSignUpForm = createAction<ValidateFormAction>(actionTypes.VALIDATE
 const setSignInFormField = createAction<SetFieldAction>(actionTypes.SET_SIGNIN_FORM_FIELD);
 const validateSignInForm = createAction<ValidateFormAction>(actionTypes.VALIDATE_SIGNIN_FORM);
 const postSignInStatus = createAction<any>(actionTypes.POST_SIGNIN_STATUS);
+const setAuth = createAction<boolean>(actionTypes.SET_AUTH);
+const setCurrentUser = createAction<UserInterface>(actionTypes.SET_CURRENT_USER);
 
 export default createReducer(userInitialState,
   (builder) => {
@@ -34,6 +36,12 @@ export default createReducer(userInitialState,
       })
       .addCase(postSignInStatus, (state, action) => {
         state.requests.postSignIn[action.payload.status] = action.payload.value;
+      })
+      .addCase(setAuth, (state, action) => {
+        state.auth = action.payload
+      })
+      .addCase(setCurrentUser, (state, action) => {
+        state.currentUser = action.payload
       })
   }
 );
