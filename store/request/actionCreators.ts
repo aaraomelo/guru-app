@@ -31,3 +31,8 @@ export const POST = (url: string, data: any, dispatch: any, getState: () => Root
           reject(error as any);
         });
   });
+
+export const ERROR = (data: any) =>
+  new Promise<any>((resolve, reject) => {
+    reject({ response: { data } })
+  });

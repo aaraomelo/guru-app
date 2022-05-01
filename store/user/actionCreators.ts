@@ -1,5 +1,5 @@
 import { RootState } from "..";
-import { POST, setToken } from "../request/actionCreators";
+import { ERROR, POST, setToken } from "../request/actionCreators";
 import * as actionTypes from "./actionTypes"
 
 export const setSignUpFormField = (payload: SetFieldAction) =>
@@ -28,7 +28,13 @@ export const postSignInForm = () => (dispatch: any, getState: () => Readonly<Roo
       dispatch(setToken(response.data));
       return response;
     })
+  } else {
+    return ERROR({ 
+      statusCode: 400, 
+      message: "Por gentileza, verifique a validade dos campos." 
+    })
   }
+
 
 
 }

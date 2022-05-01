@@ -9,6 +9,7 @@ import CustomInput from './CustomInput';
 import { postSignInForm, setSignInFormField, validateSignInForm } from '../store/user/actionCreators';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react'
 
 export interface SignInProps { }
 
@@ -20,15 +21,28 @@ const SignInForm = ({ getSignInForm, getErrorMessages, setSignInForm, validateSi
   const setters = setSignInForm();
   const errorMessages = getErrorMessages();
   const blur = validateSignInFormField();
-  const submit = () => {
-    signin()
+  const toast = useToast()
+  const submit = () => signin()
     .then(() => {
       router.push('/users');
+      toast({
+        title: `Login realizado`,
+        description: `Seja bem vindo!`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
     })
-    .catch((error)=>{
-      console.log(error);
+    .catch((error) => {
+      const { statusCode, message } = error.response.data;
+      toast({
+        title: `Código ${statusCode}`,
+        description: `${message}`,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     })
-  }
 
   return (
     <Flex width="full" align="center" justifyContent="center">
