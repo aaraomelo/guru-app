@@ -14,20 +14,20 @@ const getHeaders = (rootState: RootState) =>
 
 export const POST = (url: string, data: any, dispatch: any, getState: () => RootState, requestAction: any) =>
   new Promise<any>((resolve, reject) => {
+    const state = getState();
     dispatch(requestAction({ status: 'pending', value: true }))
-    axios.post(url, data, { ...getHeaders(getState()) })
+    axios.post(`${state.request.baseURL}/${url}`, data, { ...getHeaders(state) })
       .then(
         (response) => {
-          []
           dispatch(requestAction({ status: 'suceeded', value: true }))
           dispatch(requestAction({ status: 'failed', value: false }))
           dispatch(requestAction({ status: 'pending', value: false }))
           resolve(response as any);
         },
-        (err) => {
+        (error) => {
           dispatch(requestAction({ status: 'suceeded', value: false }))
           dispatch(requestAction({ status: 'failed', value: true }))
           dispatch(requestAction({ status: 'pending', value: false }))
-          reject(err as any);
+          reject(error as any);
         });
   });

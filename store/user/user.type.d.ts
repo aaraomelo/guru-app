@@ -1,4 +1,7 @@
 type UserState = {
+  requests: {
+    postSignIn: RequestInterface
+  },
   forms: {
     signup: UserInterface,
     signin: SignInInterface

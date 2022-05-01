@@ -8,6 +8,7 @@ const setSignUpFormField = createAction<SetFieldAction>(actionTypes.SET_SIGNUP_F
 const validateSignUpForm = createAction<ValidateFormAction>(actionTypes.VALIDATE_SIGNUP_FORM);
 const setSignInFormField = createAction<SetFieldAction>(actionTypes.SET_SIGNIN_FORM_FIELD);
 const validateSignInForm = createAction<ValidateFormAction>(actionTypes.VALIDATE_SIGNIN_FORM);
+const postSignInStatus = createAction<any>(actionTypes.POST_SIGNIN_STATUS);
 
 export default createReducer(userInitialState,
   (builder) => {
@@ -29,6 +30,9 @@ export default createReducer(userInitialState,
       .addCase(validateSignInForm, (state, action) => {
         const { payload: { field } } = action
         state.validations.signin = validateModel(state.forms.signin, state.validations.signin, validate, field)
+      })
+      .addCase(postSignInStatus, (state, action) => {
+        state.requests.postSignIn[action.payload.status] = action.payload.value;
       })
   }
 );
