@@ -1,5 +1,5 @@
 import { RootState } from "..";
-import { POST } from "../request/actionCreators";
+import { POST, setToken } from "../request/actionCreators";
 import * as actionTypes from "./actionTypes"
 
 export const setSignUpFormField = (payload: SetFieldAction) =>
@@ -18,13 +18,19 @@ export const validateSignInForm = (payload: ValidateFormAction) =>
   ({ type: actionTypes.POST_SIGNIN_STATUS, payload });
 
 export const postSignInForm = () => (dispatch: any, getState: () => Readonly<RootState>) => {
+  dispatch(validateSignInForm({}));
   const state = getState();
-  const data = state.user.forms.signin;
-  const url = `auth/login`;
-  return POST(url, data, dispatch, getState, postSignInStatus)
-  .then((response: any) => {
-    console.log(response);
-  })
+  if(state.user.isValid.signin) {
+    const data = state.user.forms.signin;
+    const url = `/auth/login`;
+    return POST(url, data, dispatch, getState, postSignInStatus)
+    .then((response: any) => {
+      dispatch(setToken(response.data));
+      return response;
+    })
+  }
+
+
 }
 
 

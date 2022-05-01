@@ -10,6 +10,10 @@ type UserState = {
     signup: ValidationUserInterface
     signin: ValidationSignInInterface
   }
+  isValid: {
+    signin: boolean,
+    signup: boolean
+  }
 }
 
 interface UserInterface {

@@ -1,5 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import { validateModel } from "../validations";
+import { haveMessages, validateModel } from "../validations";
 import * as actionTypes from "./actionTypes"
 import { userInitialState } from "./state";
 import { validate } from "./validate";
@@ -30,6 +30,7 @@ export default createReducer(userInitialState,
       .addCase(validateSignInForm, (state, action) => {
         const { payload: { field } } = action
         state.validations.signin = validateModel(state.forms.signin, state.validations.signin, validate, field)
+        state.isValid.signin = haveMessages(state.validations.signin);
       })
       .addCase(postSignInStatus, (state, action) => {
         state.requests.postSignIn[action.payload.status] = action.payload.value;

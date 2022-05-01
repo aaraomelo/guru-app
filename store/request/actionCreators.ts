@@ -16,7 +16,7 @@ export const POST = (url: string, data: any, dispatch: any, getState: () => Root
   new Promise<any>((resolve, reject) => {
     const state = getState();
     dispatch(requestAction({ status: 'pending', value: true }))
-    axios.post(`${state.request.baseURL}/${url}`, data, { ...getHeaders(state) })
+    axios.post(`${state.request.baseURL}${url}`, data, { ...getHeaders(state) })
       .then(
         (response) => {
           dispatch(requestAction({ status: 'suceeded', value: true }))

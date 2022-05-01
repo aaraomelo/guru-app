@@ -27,5 +27,9 @@ export const userInitialState: UserState = {
       email: [],
       password: [],
     }
+  },
+  isValid: {
+    signin: false,
+    signup: false
   }
 };

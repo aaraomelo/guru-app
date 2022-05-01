@@ -6,20 +6,30 @@ import {
   Button,
 } from '@chakra-ui/react';
 import CustomInput from './CustomInput';
-import { setSignInFormField, validateSignInForm } from '../store/user/actionCreators';
+import { postSignInForm, setSignInFormField, validateSignInForm } from '../store/user/actionCreators';
 import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 
 export interface SignInProps { }
 
 type Props = SignInProps & MapStateToPropsTypes & MapDispatchToPropsTypes;
 
-const SignInForm = ({ getSignInForm, getErrorMessages, setSignInForm, validateSignInFormField }: Props) => {
+const SignInForm = ({ getSignInForm, getErrorMessages, setSignInForm, validateSignInFormField, signin }: Props) => {
+  const router = useRouter();
   const getters = getSignInForm();
   const setters = setSignInForm();
   const errorMessages = getErrorMessages();
   const blur = validateSignInFormField();
-  const submit = () => console.log('login');
-  
+  const submit = () => {
+    signin()
+    .then(() => {
+      router.push('/users');
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
+
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
@@ -76,6 +86,7 @@ interface MapStateToPropsTypes {
 interface MapDispatchToPropsTypes {
   setSignInForm: () => SetterSignInInterface;
   validateSignInFormField: () => BlurSignInInterface;
+  signin: () => Promise<any>;
 }
 
 function mapStateToProps(state: any) {
@@ -95,6 +106,7 @@ const mapDispatchToProps = (dispatch: any) => {
       email: () => dispatch(validateSignInForm({ field: 'email' })),
       password: () => dispatch(validateSignInForm({ field: 'password' })),
     }),
+    signin: () => dispatch(postSignInForm())
   }
 }
 
